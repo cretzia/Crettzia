@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cretzia</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f4f8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    width: 100%;
+    background: #004aad;
+    color: white;
+    padding: 25px 0 10px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+  }
+
+  header p {
+    font-size: 1rem;
+    color: #dce6f5;
+    margin-top: 0;
+  }
+
+  .graphic-home {
+    margin: 20px auto;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .graphic-home img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .buttons {
+    margin: 30px 0 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  button {
+    background-color: #004aad;
+    border: none;
+    color: white;
+    padding: 12px 22px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover:not(:disabled) {
+    background-color: #003580;
+  }
+
+  button:disabled {
+    background-color: #7a7a7a;
+    cursor: default;
+  }
+
+  /* Sidebar */
+  #sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background: #003580;
+    color: white;
+    padding-top: 60px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar.active {
+    transform: translateX(0);
+  }
+
+  #sidebar button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    width: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  #sidebar button:hover {
+    background: #004aad;
+  }
+
+  #toggleSidebar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #004aad;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  /* Content section */
+  #mainContent {
+    width: 90%;
+    max-width: 600px;
+    margin: 80px auto 20px;
+    text-align: center;
+  }
+
+  #descriptionSection {
+    display: none;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  textarea {
+    resize: none;
+    min-height: 100px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+
+  input {
+    font-size: 1rem;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+
+  #messageSection {
+    background-color: #e0f2fe;
+    border: 1px solid #60a5fa;
+    color: #0369a1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  a.instagram-link {
+    color: #0d95e8;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .home-button {
+    margin-top: 20px;
+    background-color: #118ab2;
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <button onclick="goHome()">🏠 Home</button>
+  <button onclick="handleServiceSelection('Graphic Design')">🎨 Graphic Design</button>
+  <button onclick="handleServiceSelection('Presentations (PowerPoint, Word, Excel)')">📊 Presentations</button>
+  <button disabled>🎬 Video Editing (Coming Soon)</button>
+</div>
+
+<!-- Sidebar toggle button -->
+<button id="toggleSidebar">☰ Menu</button>
+
+<header>
+  <h1>Cretzia</h1>
+  <p>We are the Middle East’s #1 designer</p>
+</header>
+
+<div id="mainContent">
+  <!-- Homepage -->
+  <div id="homeSection">
+    <div class="graphic-home">
+      <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/fc700d4d-3055-46e4-bda9-1b14c0637127.png" alt="Service Graphic" />
+    </div>
+    <div class="buttons">
+      <button onclick="handleServiceSelection('Graphic Design')">Graphic Design</button>
+      <button onclick="handleServiceSelection('Presentations (PowerPoint, Word, Excel)')">Presentations (PowerPoint, Word, Excel)</button>
+      <button disabled>Video Editing (Coming Soon)</button>
+    </div>
+  </div>
+
+  <!-- Description form -->
+  <div id="descriptionSection">
+    <label for="instagram">Your Instagram account (handle only):</label>
+    <input type="text" id="instagram" placeholder="Enter Instagram handle" />
+    <label for="description">Describe the style of the order (max 300 words):</label>
+    <textarea id="description" maxlength="1800" placeholder="Enter your description here..."></textarea>
+    <button id="submitDesc" style="margin-top: 10px;">Submit</button>
+    <button class="home-button" onclick="goHome()">Back to Home</button>
+  </div>
+
+  <!-- Message -->
+  <div id="messageSection">
+    <p>Payment methods available: <strong>Instapay</strong> or <strong>Fawry</strong>.</p>
+    <p>Please check your WhatsApp to send the message with your order details.</p>
+    <p>You can also DM me on Instagram (<a href="#" id="userInstagramLink" class="instagram-link" target="_blank"></a>) to complete payment.</p>
+    <button class="home-button" onclick="goHome()">Back to Home</button>
+  </div>
+</div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleSidebar = document.getElementById('toggleSidebar');
+  const homeSection = document.getElementById('homeSection');
+  const descriptionSection = document.getElementById('descriptionSection');
+  const messageSection = document.getElementById('messageSection');
+  const instagramInput = document.getElementById('instagram');
+  const descriptionInput = document.getElementById('description');
+  const submitDesc = document.getElementById('submitDesc');
+  const userInstagramLink = document.getElementById('userInstagramLink');
+
+  let selectedService = null;
+  let orderData = {};
+
+  toggleSidebar.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
+
+  function goHome() {
+    homeSection.style.display = 'block';
+    descriptionSection.style.display = 'none';
+    messageSection.style.display = 'none';
+    sidebar.classList.remove('active');
+  }
+
+  function handleServiceSelection(serviceName) {
+    selectedService = serviceName;
+    homeSection.style.display = 'none';
+    descriptionSection.style.display = 'flex';
+    messageSection.style.display = 'none';
+    sidebar.classList.remove('active');
+  }
+
+  submitDesc.addEventListener('click', () => {
+    const text = descriptionInput.value.trim();
+    const insta = instagramInput.value.trim();
+    if (!insta) {
+      alert('Please enter your Instagram account handle.');
+      return;
+    }
+    if (!text) {
+      alert('Please enter a description of the order style.');
+      return;
+    }
+    if (text.length > 1800) {
+      alert('Your description exceeds 300 words max. Please shorten it.');
+      return;
+    }
+    if (!selectedService) {
+      alert('Please select a service before submitting.');
+      return;
+    }
+
+    orderData = { insta, description: text, service: selectedService };
+    descriptionSection.style.display = 'none';
+    messageSection.style.display = 'flex';
+
+    const phoneNumber = '201013430536';
+    const message = `New order for service: ${orderData.service}%0A%0AFrom Instagram: @${orderData.insta}%0A%0ADescription:%0A${encodeURIComponent(orderData.description)}`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    window.open(whatsappUrl, '_blank');
+
+    userInstagramLink.href = `https://instagram.com/${orderData.insta}`;
+    userInstagramLink.textContent = '@' + orderData.insta;
+  });
+</script>
+</body>
+</html>
